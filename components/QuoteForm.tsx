@@ -20,7 +20,6 @@ const QuoteForm: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Helper to open default mail client with pre-filled data
   const handleManualEmail = () => {
     const subject = `Cleaning Quote Request: ${formData.serviceType} - ${formData.name}`;
     const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0AService: ${formData.serviceType}%0D%0ASq Ft: ${formData.sqFt}%0D%0AFrequency: ${formData.frequency}%0D%0ADetails: ${formData.details}`;
@@ -32,8 +31,6 @@ const QuoteForm: React.FC = () => {
     setLoading(true);
     
     try {
-      // Using FormSubmit.co for backend-less form submission
-      // Note: The first time you use this, you must check your email to activate the form endpoint.
       const response = await fetch("https://formsubmit.co/ajax/harjotsingh538@gmail.com", {
         method: "POST",
         headers: { 
@@ -43,7 +40,7 @@ const QuoteForm: React.FC = () => {
         body: JSON.stringify({
           _subject: `New Quote Request: ${formData.serviceType} - ${formData.name}`,
           _template: "table",
-          _captcha: "false", // Disables captcha for smoother UX
+          _captcha: "false",
           ...formData
         })
       });
@@ -76,13 +73,13 @@ const QuoteForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-      <div className="bg-blue-600 p-6 text-white text-center">
-        <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
-          {step === 2 ? <CheckCircle2 className="w-6 h-6" /> : <Mail className="w-6 h-6" />}
+    <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100">
+      <div className="bg-blue-600 p-8 text-white text-center">
+        <h3 className="text-2xl font-bold flex items-center justify-center gap-3">
+          {step === 2 ? <CheckCircle2 className="w-7 h-7 text-blue-100" /> : <Mail className="w-7 h-7 text-blue-100" />}
           {step === 2 ? 'Request Sent' : 'Request a Free Quote'}
         </h3>
-        <p className="text-blue-100 mt-2">
+        <p className="text-blue-50 mt-2 font-medium opacity-90">
           {step === 2 ? 'We will be in touch shortly' : 'Fill out the form below and we will contact you with a customized price.'}
         </p>
       </div>
@@ -92,24 +89,24 @@ const QuoteForm: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
                 <input
                   type="text"
                   name="name"
                   required
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
                 <input
                   type="email"
                   name="email"
                   required
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="john@example.com"
@@ -119,10 +116,10 @@ const QuoteForm: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Service Type</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Service Type</label>
                 <select
                   name="serviceType"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                   value={formData.serviceType}
                   onChange={handleInputChange}
                 >
@@ -132,13 +129,13 @@ const QuoteForm: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Approx. Sq Ft</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Approx. Sq Ft</label>
                 <input
                   type="number"
                   name="sqFt"
                   required
                   min="100"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                   value={formData.sqFt}
                   onChange={handleInputChange}
                 />
@@ -147,10 +144,10 @@ const QuoteForm: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Frequency</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Frequency</label>
                 <select
                   name="frequency"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                   value={formData.frequency}
                   onChange={handleInputChange}
                 >
@@ -161,11 +158,11 @@ const QuoteForm: React.FC = () => {
                 </select>
               </div>
               <div>
-                 <label className="block text-sm font-medium text-slate-700 mb-1">Phone (Optional)</label>
+                 <label className="block text-sm font-semibold text-slate-700 mb-2">Phone (Optional)</label>
                 <input
                   type="tel"
                   name="phone"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="(555) 123-4567"
@@ -174,11 +171,11 @@ const QuoteForm: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Details or Special Requests</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Details or Special Requests</label>
               <textarea
                 name="details"
                 rows={4}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
                 value={formData.details}
                 onChange={handleInputChange}
                 placeholder="e.g., We have a dog, focus on the kitchen, need windows done..."
@@ -188,7 +185,7 @@ const QuoteForm: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2 shadow-lg shadow-blue-200"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95"
             >
               {loading ? (
                 <>
@@ -202,7 +199,7 @@ const QuoteForm: React.FC = () => {
                 </>
               )}
             </button>
-            <p className="text-xs text-center text-slate-500 mt-2">
+            <p className="text-xs text-center text-slate-400 mt-2">
               *Your privacy is important to us. We will never share your information.
             </p>
           </form>
@@ -210,8 +207,8 @@ const QuoteForm: React.FC = () => {
 
         {step === 2 && (
             <div className="animate-fadeIn text-center py-8">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="w-10 h-10 text-green-600" />
+                <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle2 className="w-10 h-10 text-blue-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Request Received!</h3>
                 <p className="text-slate-600 mb-8 max-w-md mx-auto">
@@ -223,14 +220,14 @@ const QuoteForm: React.FC = () => {
                 <div className="flex flex-col gap-3">
                   <button
                       onClick={handleReset}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg hover:shadow-blue-200"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg hover:shadow-blue-500/30"
                   >
                       Send Another Request
                   </button>
                   
                   <button 
                     onClick={handleManualEmail}
-                    className="text-slate-500 hover:text-blue-600 text-sm flex items-center justify-center gap-1 mt-4"
+                    className="text-slate-500 hover:text-blue-600 text-sm flex items-center justify-center gap-1 mt-4 font-medium transition-colors"
                   >
                     <MessageSquare className="w-4 h-4" />
                     Open in Email Client instead
